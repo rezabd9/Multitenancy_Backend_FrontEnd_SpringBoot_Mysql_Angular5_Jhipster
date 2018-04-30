@@ -1,0 +1,19 @@
+version: '2'
+services:
+    qrservice-app:
+        image: qrservice
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://qrservice-postgresql:5432/qrservice
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=qrservice-elasticsearch:9300
+        ports:
+            - 8080:8080
+    qrservice-postgresql:
+        extends:
+            file: postgresql.yml
+            service: qrservice-postgresql
+    qrservice-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: qrservice-elasticsearch
